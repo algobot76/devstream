@@ -38,8 +38,13 @@ func Apply(configFile string, continueDirectly bool) error {
 		log.Info("No changes done since last apply. There is nothing to do.")
 		return nil
 	}
+
 	for _, change := range changes {
 		log.Info(change.Description)
+		log.Info("tool raw changes: ", change.Tool.Options)
+		// fill ref inputs
+		FillInputParams(smgr, change.Tool.Options)
+		log.Info("tool changes with filled inputs: ", change.Tool.Options)
 	}
 
 	if !continueDirectly {
