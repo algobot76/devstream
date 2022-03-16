@@ -208,9 +208,11 @@ func fillRefValueWithOutputs(smgr statemanager.Manager, options map[string]inter
 				if outs, ok := outputs.(map[string]interface{}); ok {
 					log.Debug("Ref outs: ", outs)
 					log.Debug("Ref param: ", refParam[3])
-					options[key] = outs[refParam[3]]
 					if value == nil {
 						return errors.New("ref input value is null: " + refParam[3])
+					}
+					if options[key], ok = outs[refParam[3]]; !ok {
+						return fmt.Errorf("can not find %s in dependency outputs", refParam[3])
 					}
 				}
 			}
