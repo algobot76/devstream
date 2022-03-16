@@ -56,7 +56,7 @@ func TestGetOutputsIfEmpty(t *testing.T) {
 	}()
 
 	outputs, err := smgr.GetOutputs(keystateReferee)
-	assert.NoError(t, err)
+	assert.EqualError(t, err, "cannot find outputs from state: default")
 	assert.Equal(t, nil, outputs)
 }
 
@@ -82,6 +82,6 @@ func TestGetOutputsIfWrongKey(t *testing.T) {
 	}()
 
 	outputs, err := smgr.GetOutputs("wrong_key")
-	assert.NoError(t, err)
+	assert.EqualError(t, err, "cannot find state by key: wrong_key")
 	assert.Equal(t, nil, outputs)
 }
